@@ -56,9 +56,24 @@ const writeFields = [
   { key: 'email1', label: 'Email 1', type: 'string' },
   { key: 'email2', label: 'Email 2', type: 'string' },
   { key: 'on_hold', label: 'On hold', type: 'boolean' },
-  { key: 'xero_customer_id', label: 'Xero customer ID', type: 'string' },
-  { key: 'quickbooks_customer_id', label: 'QuickBooks customer ID', type: 'integer' },
-  { key: 'stripe_customer_id', label: 'Stripe customer ID', type: 'string' },
+  {
+    key: 'xero_customer_id',
+    label: 'Xero customer ID',
+    type: 'string',
+    helpText: 'The ID from Xero, not the Jobable customer ID.',
+  },
+  {
+    key: 'quickbooks_customer_id',
+    label: 'QuickBooks customer ID',
+    type: 'integer',
+    helpText: 'The ID from QuickBooks, not the Jobable customer ID.',
+  },
+  {
+    key: 'stripe_customer_id',
+    label: 'Stripe customer ID',
+    type: 'string',
+    helpText: 'The ID from Stripe, not the Jobable customer ID.',
+  },
 ];
 
 module.exports = {
@@ -149,18 +164,21 @@ module.exports = {
       filter: 'xero_customer_id',
       label: 'Xero customer ID',
       type: 'string',
+      helpText: 'The ID from Xero, not the Jobable customer ID.',
     },
     {
       key: 'quickbooks_customer_id',
       filter: 'quickbooks_customer_id',
       label: 'QuickBooks customer ID',
       type: 'integer',
+      helpText: 'The ID from QuickBooks, not the Jobable customer ID.',
     },
     {
       key: 'stripe_customer_id',
       filter: 'stripe_customer_id',
       label: 'Stripe customer ID',
       type: 'string',
+      helpText: 'The ID from Stripe, not the Jobable customer ID.',
     },
   ],
   sortChoices: {

@@ -33,5 +33,8 @@ describe('searches.find_contact', () => {
       search: 'find_site.id',
     });
     expect(createFields.find((field) => field.key === 'firstname').required).toBe(true);
+    expect(App.searches.find_contact.operation.inputFields.find((field) => field.key === 'id').dynamic).toBe(
+      'list_contacts.id.name',
+    );
   });
 });

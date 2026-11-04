@@ -69,6 +69,11 @@ describe('searches.find_customer', () => {
     expect(results).toEqual([{ id: 1, company: 'Foreman Ltd', on_hold: false }]);
   });
 
+  it('offers a customer dropdown on the ID field', () => {
+    const idField = App.searches.find_customer.operation.inputFields.find((field) => field.key === 'id');
+    expect(idField.dynamic).toBe('list_customers.id.company');
+  });
+
   it('rejects an empty search so Find or Create cannot match an unrelated row', async () => {
     await expect(
       appTester(App.searches.find_customer.operation.perform, authBundle({})),

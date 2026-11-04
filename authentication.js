@@ -27,7 +27,7 @@ module.exports = {
   fields: [
     {
       helpText:
-        'Paste your API key directly from the settings page in Jobable Admin.',
+        'Create a key in Jobable Admin under **Settings → API Access & Webhooks**. See the [API documentation](https://api.jobable.app/docs) for details.',
       computed: false,
       key: 'api_key',
       required: true,

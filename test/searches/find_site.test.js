@@ -26,5 +26,8 @@ describe('searches.find_site', () => {
       search: 'find_customer.id',
     });
     expect(App.creates.create_site.operation.inputFields.find((field) => field.key === 'name').required).toBe(true);
+    expect(App.searches.find_site.operation.inputFields.find((field) => field.key === 'id').dynamic).toBe(
+      'list_sites.id.name',
+    );
   });
 });
