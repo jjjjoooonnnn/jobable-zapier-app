@@ -1,0 +1,290 @@
+const sample = {
+  id: 42,
+  customer_id: 3,
+  site_id: 9,
+  id_number: 'AHU-01',
+  detail: null,
+  make: 'Daikin',
+  model: 'VRV IV',
+  serial: 'SN123456',
+  install_date: '2022-06-01',
+  notes: null,
+  supplier_id: 87,
+  gc_no: null,
+  product_code: null,
+  location: 'Roof',
+  unit_capacity: '2.4',
+  co2_equivalent: '1.62',
+  warranty_expiry_date: null,
+  decommissioned: false,
+  decommissioned_reason: null,
+  category: {
+    id: 10,
+    name: 'Condensing Unit',
+    parent_id: 4,
+    fgas: true,
+  },
+  gas_type: {
+    id: 4,
+    name: 'R32',
+    gwp: 675,
+  },
+  custom_fields: [
+    { key: 'custom1', name: 'Voltage (V)', value: '240' },
+    { key: 'custom2', name: 'Power kW', value: '2.4' },
+  ],
+  label: 'Daikin VRV IV (AHU-01)',
+};
+
+const outputFields = [
+  { key: 'id', label: 'ID', type: 'integer' },
+  { key: 'customer_id', label: 'Customer ID', type: 'integer' },
+  { key: 'site_id', label: 'Site ID', type: 'integer' },
+  { key: 'id_number', label: 'ID number' },
+  { key: 'detail', label: 'Detail' },
+  { key: 'make', label: 'Make' },
+  { key: 'model', label: 'Model' },
+  { key: 'serial', label: 'Serial' },
+  { key: 'install_date', label: 'Install date' },
+  { key: 'notes', label: 'Notes' },
+  { key: 'supplier_id', label: 'Supplier ID', type: 'integer' },
+  { key: 'gc_no', label: 'GC number' },
+  { key: 'product_code', label: 'Product code' },
+  { key: 'location', label: 'Location' },
+  { key: 'unit_capacity', label: 'Unit capacity' },
+  { key: 'co2_equivalent', label: 'CO2 equivalent' },
+  { key: 'warranty_expiry_date', label: 'Warranty expiry date' },
+  { key: 'decommissioned', label: 'Decommissioned', type: 'boolean' },
+  { key: 'decommissioned_reason', label: 'Decommissioned reason' },
+  { key: 'category__id', label: 'Category ID', type: 'integer' },
+  { key: 'category__name', label: 'Category name' },
+  { key: 'category__parent_id', label: 'Category parent ID', type: 'integer' },
+  { key: 'category__fgas', label: 'Category F-gas', type: 'boolean' },
+  { key: 'gas_type__id', label: 'Gas type ID', type: 'integer' },
+  { key: 'gas_type__name', label: 'Gas type name' },
+  { key: 'gas_type__gwp', label: 'Gas type GWP', type: 'number' },
+  { key: 'custom_fields[]key', label: 'Custom field key' },
+  { key: 'custom_fields[]name', label: 'Custom field name' },
+  { key: 'custom_fields[]value', label: 'Custom field value' },
+];
+
+const customerField = {
+  key: 'customer_id',
+  label: 'Customer',
+  type: 'integer',
+  required: true,
+  dynamic: 'list_customers.id.company',
+  search: 'find_customer.id',
+  altersDynamicFields: true,
+};
+
+const siteField = {
+  key: 'site_id',
+  label: 'Site',
+  type: 'integer',
+  required: true,
+  dynamic: 'list_sites.id.name',
+  search: 'find_site.id',
+};
+
+const categoryField = {
+  key: 'category_id',
+  label: 'Category',
+  type: 'integer',
+  required: true,
+  dynamic: 'list_equipment_categories.id.name',
+  search: 'find_equipment_category.id',
+};
+
+const customFieldKeys = {
+  custom1: 'custom1',
+  custom2: 'custom2',
+  custom3: 'custom3',
+  custom4: 'custom4',
+  custom5: 'custom5',
+  custom6: 'custom6',
+  custom7: 'custom7',
+  custom8: 'custom8',
+  custom9: 'custom9',
+  custom10: 'custom10',
+};
+
+const writeFields = [
+  { key: 'id_number', label: 'ID number', type: 'string' },
+  { key: 'detail', label: 'Detail', type: 'string' },
+  { key: 'make', label: 'Make', type: 'string' },
+  { key: 'model', label: 'Model', type: 'string' },
+  { key: 'serial', label: 'Serial', type: 'string' },
+  {
+    key: 'install_date',
+    label: 'Install date',
+    type: 'string',
+    helpText: 'Free-text date as stored in Jobable, for example 2022-06-01.',
+  },
+  { key: 'notes', label: 'Notes', type: 'string' },
+  {
+    key: 'supplier_id',
+    label: 'Supplier ID',
+    type: 'integer',
+    helpText: 'Jobable supplier ID. There is no supplier dropdown in this version.',
+  },
+  { key: 'gc_no', label: 'GC number', type: 'string' },
+  { key: 'product_code', label: 'Product code', type: 'string' },
+  { key: 'location', label: 'Location', type: 'string' },
+  {
+    key: 'unit_capacity',
+    label: 'Unit capacity',
+    type: 'string',
+    helpText: 'Refrigerant charge in kg, as text.',
+  },
+  {
+    key: 'gas_type_id',
+    label: 'Gas type ID',
+    type: 'integer',
+    helpText: 'Shared refrigerant catalogue ID. There is no gas-types list endpoint.',
+  },
+  { key: 'co2_equivalent', label: 'CO2 equivalent', type: 'string' },
+  {
+    key: 'warranty_expiry_date',
+    label: 'Warranty expiry date',
+    type: 'string',
+    helpText: 'Free-text date as stored in Jobable, for example 2026-12-31.',
+  },
+  { key: 'decommissioned', label: 'Decommissioned', type: 'boolean' },
+  { key: 'decommissioned_reason', label: 'Decommissioned reason', type: 'string' },
+  {
+    key: 'custom_fields',
+    label: 'Custom fields',
+    children: [
+      {
+        key: 'key',
+        label: 'Key',
+        type: 'string',
+        required: true,
+        choices: customFieldKeys,
+        helpText: 'Stable slot identifier. Only slots with a tenant-configured label are stored.',
+      },
+      {
+        key: 'value',
+        label: 'Value',
+        type: 'string',
+        helpText: 'Empty or omitted value clears the slot.',
+      },
+    ],
+  },
+];
+
+const equipmentLabel = (record) => {
+  const name = [record.make, record.model].filter(Boolean).join(' ');
+  const tag = record.id_number || record.serial;
+  if (name && tag) {
+    return `${name} (${tag})`;
+  }
+  return name || tag || `Equipment ${record.id}`;
+};
+
+module.exports = {
+  key: 'equipment',
+  noun: 'Equipment',
+  plural: 'Equipment',
+  path: 'equipment',
+  event: 'equipment',
+  idLabel: 'Equipment ID',
+  displayField: 'label',
+  listSort: '-id',
+  hookListSort: '-id',
+  listFilters: ['customer_id', 'site_id'],
+  listLabel: { key: 'label', value: equipmentLabel },
+  searchDescription: 'Finds equipment.',
+  createDescription: 'Creates a new equipment record.',
+  updateDescription: 'Updates existing equipment.',
+  newDescription: 'Triggers when new equipment is created.',
+  updatedDescription: 'Triggers when equipment is updated.',
+  sample,
+  outputFields,
+  createFields: [customerField, siteField, categoryField, ...writeFields],
+  updateFields: [
+    { ...siteField, required: false },
+    { ...categoryField, required: false },
+    ...writeFields,
+  ],
+  updateExclude: ['customer_id'],
+  searchFields: [
+    { ...customerField, required: false, filter: 'customer_id' },
+    { ...siteField, required: false, filter: 'site_id' },
+    { ...categoryField, required: false, filter: 'category_id' },
+    {
+      key: 'make',
+      filter: 'make',
+      label: 'Make',
+      type: 'string',
+      helpText: 'Exact match, case-insensitive.',
+    },
+    {
+      key: 'model',
+      filter: 'model',
+      label: 'Model',
+      type: 'string',
+      helpText: 'Exact match, case-insensitive.',
+    },
+    {
+      key: 'serial',
+      filter: 'serial',
+      label: 'Serial',
+      type: 'string',
+      helpText: 'Exact match as stored.',
+    },
+    {
+      key: 'id_number',
+      filter: 'id_number',
+      label: 'ID number',
+      type: 'string',
+      helpText: 'Exact match as stored.',
+    },
+    {
+      key: 'q',
+      filter: 'q',
+      label: 'Search',
+      type: 'string',
+      helpText: 'Free-text across make, model, serial, ID number, detail, and location.',
+    },
+    {
+      key: 'make_contains',
+      filter: 'make_contains',
+      label: 'Make contains',
+      type: 'string',
+    },
+    {
+      key: 'model_contains',
+      filter: 'model_contains',
+      label: 'Model contains',
+      type: 'string',
+    },
+    {
+      key: 'warranty_expiry_from',
+      filter: 'warranty_expiry_from',
+      label: 'Warranty expiry from',
+      type: 'string',
+      helpText: 'YYYY-MM-DD. Equipment with warranty expiry on or after this date.',
+    },
+    {
+      key: 'warranty_expiry_to',
+      filter: 'warranty_expiry_to',
+      label: 'Warranty expiry to',
+      type: 'string',
+      helpText: 'YYYY-MM-DD. Equipment with warranty expiry on or before this date.',
+    },
+    {
+      key: 'decommissioned',
+      filter: 'decommissioned',
+      label: 'Decommissioned',
+      type: 'boolean',
+    },
+  ],
+  sortChoices: {
+    '-id': 'ID (newest first)',
+    id: 'ID (oldest first)',
+    warranty_expiry_date: 'Warranty expiry (soonest first)',
+    '-warranty_expiry_date': 'Warranty expiry (latest first)',
+  },
+};

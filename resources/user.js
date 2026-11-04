@@ -37,6 +37,15 @@ module.exports = {
       helpText: 'Defaults to active users. Suspended users are hidden unless you ask for them.',
     },
     {
+      key: 'equipment_category_id',
+      filter: 'equipment_category_id',
+      label: 'Category',
+      type: 'integer',
+      dynamic: 'list_equipment_categories.id.name',
+      search: 'find_equipment_category.id',
+      helpText: 'Engineers linked to this equipment category.',
+    },
+    {
       key: 'q',
       filter: 'q',
       label: 'Search',

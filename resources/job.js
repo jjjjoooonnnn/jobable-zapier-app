@@ -86,10 +86,11 @@ const writeFields = [
   { key: 'admin_contact_email', label: 'Admin contact email', type: 'string' },
   {
     key: 'equipment_ids',
-    label: 'Equipment IDs',
+    label: 'Equipment',
     type: 'integer',
     list: true,
-    helpText: 'Jobable equipment IDs to link to this job.',
+    dynamic: 'list_equipment.id.label',
+    helpText: 'Select one or more records. To search by make, serial, or ID number, use Find Equipment in an earlier step.',
   },
 ];
 
@@ -118,9 +119,10 @@ module.exports = {
     {
       key: 'equipment_id',
       filter: 'equipment_id',
-      label: 'Equipment ID',
+      label: 'Equipment',
       type: 'integer',
-      helpText: 'Jobs linked to this equipment item.',
+      dynamic: 'list_equipment.id.label',
+      search: 'find_equipment.id',
     },
     { ...statusField, filter: 'status_id' },
     { ...departmentField, filter: 'department_id' },

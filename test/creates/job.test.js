@@ -61,6 +61,12 @@ describe('creates.job', () => {
       dynamic: 'list_job_statuses.id.name',
       search: 'find_job_status.id',
     });
+    expect(fields.equipment_ids).toMatchObject({
+      label: 'Equipment',
+      list: true,
+      dynamic: 'list_equipment.id.label',
+    });
+    expect(fields.equipment_ids.search).toBeUndefined();
     expect(App.creates.update_job.operation.inputFields.find((field) => field.key === 'customer_id')).toBeUndefined();
   });
 });

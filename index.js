@@ -11,6 +11,8 @@ const communication = require('./resources/communication');
 const user = require('./resources/user');
 const department = require('./resources/department');
 const jobStatus = require('./resources/job_status');
+const equipment = require('./resources/equipment');
+const equipmentCategory = require('./resources/equipment_category');
 
 const built = [
   customer,
@@ -23,6 +25,8 @@ const built = [
   user,
   department,
   jobStatus,
+  equipment,
+  equipmentCategory,
 ].map(buildAll);
 
 const merge = (section) => Object.assign({}, ...built.map((part) => part[section]));

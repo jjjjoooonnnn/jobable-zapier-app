@@ -33,6 +33,16 @@ describe('reference searches', () => {
     expect(App.triggers.list_users.display.hidden).toBe(true);
     expect(App.triggers.list_departments.display.hidden).toBe(true);
   });
+
+  it('filters users by equipment category', () => {
+    expect(
+      App.searches.find_user.operation.inputFields.find((field) => field.key === 'equipment_category_id'),
+    ).toMatchObject({
+      label: 'Category',
+      dynamic: 'list_equipment_categories.id.name',
+      search: 'find_equipment_category.id',
+    });
+  });
 });
 
 describe('searches.find_visit', () => {
