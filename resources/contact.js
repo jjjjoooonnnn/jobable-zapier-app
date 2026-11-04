@@ -10,6 +10,7 @@ const sample = {
   phone2: null,
   email: 'alice@acme.test',
   status: 'Active',
+  name: 'Alice Mason',
 };
 
 const outputFields = [

@@ -20,6 +20,9 @@ const salesOrder = require('./resources/sales_order');
 const invoice = require('./resources/invoice');
 const payment = require('./resources/payment');
 const paymentMethod = require('./resources/payment_method');
+const purchaseOrder = require('./resources/purchase_order');
+const supplierReturn = require('./resources/return');
+const apiRequest = require('./creates/api_request');
 
 const built = [
   customer,
@@ -41,6 +44,8 @@ const built = [
   invoice,
   payment,
   paymentMethod,
+  purchaseOrder,
+  supplierReturn,
 ].map(buildAll);
 
 const merge = (section) => Object.assign({}, ...built.map((part) => part[section]));
@@ -62,5 +67,5 @@ module.exports = {
   },
   triggers: merge('triggers'),
   searches: merge('searches'),
-  creates: merge('creates'),
+  creates: Object.assign(merge('creates'), { [apiRequest.key]: apiRequest }),
 };
