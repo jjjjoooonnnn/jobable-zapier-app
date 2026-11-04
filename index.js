@@ -13,6 +13,9 @@ const department = require('./resources/department');
 const jobStatus = require('./resources/job_status');
 const equipment = require('./resources/equipment');
 const equipmentCategory = require('./resources/equipment_category');
+const supplier = require('./resources/supplier');
+const quote = require('./resources/quote');
+const salesTax = require('./resources/sales_tax');
 
 const built = [
   customer,
@@ -27,6 +30,9 @@ const built = [
   jobStatus,
   equipment,
   equipmentCategory,
+  supplier,
+  quote,
+  salesTax,
 ].map(buildAll);
 
 const merge = (section) => Object.assign({}, ...built.map((part) => part[section]));

@@ -65,6 +65,11 @@ describe('creates.appointment', () => {
       dynamic: 'list_users.id.name',
       search: 'find_user.id',
     });
+    expect(fields.quote_id).toMatchObject({
+      label: 'Quote',
+      dynamic: 'list_quotes.id.number',
+      search: 'find_quote.id',
+    });
     expect(App.creates.delete_appointment.display).toMatchObject({
       label: 'Delete Appointment',
       description: 'Deletes an appointment.',

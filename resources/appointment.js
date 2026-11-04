@@ -76,8 +76,10 @@ const optionalFields = [
   { key: 'fixed_price', label: 'Fixed price', type: 'boolean' },
   {
     key: 'quote_id',
-    label: 'Quote ID',
+    label: 'Quote',
     type: 'integer',
+    dynamic: 'list_quotes.id.number',
+    search: 'find_quote.id',
     helpText: 'An accepted quote this visit is carrying out.',
   },
   { key: 'quote_amount', label: 'Quote amount', type: 'number' },

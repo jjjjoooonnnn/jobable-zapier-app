@@ -124,9 +124,10 @@ const writeFields = [
   { key: 'notes', label: 'Notes', type: 'string' },
   {
     key: 'supplier_id',
-    label: 'Supplier ID',
+    label: 'Supplier',
     type: 'integer',
-    helpText: 'Jobable supplier ID. There is no supplier dropdown in this version.',
+    dynamic: 'list_suppliers.id.company',
+    search: 'find_supplier.id',
   },
   { key: 'gc_no', label: 'GC number', type: 'string' },
   { key: 'product_code', label: 'Product code', type: 'string' },

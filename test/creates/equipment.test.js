@@ -72,6 +72,11 @@ describe('creates.equipment', () => {
       dynamic: 'list_equipment_categories.id.name',
       search: 'find_equipment_category.id',
     });
+    expect(fields.supplier_id).toMatchObject({
+      label: 'Supplier',
+      dynamic: 'list_suppliers.id.company',
+      search: 'find_supplier.id',
+    });
     expect(fields.custom_fields.children.map((child) => child.key)).toEqual(['key', 'value']);
     expect(App.creates.update_equipment.operation.inputFields.find((field) => field.key === 'customer_id')).toBeUndefined();
     expect(App.creates.create_equipment.display.description).toBe('Creates a new equipment record.');
