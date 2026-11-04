@@ -4,8 +4,26 @@ const { buildAll } = require('./lib/operations');
 const customer = require('./resources/customer');
 const site = require('./resources/site');
 const contact = require('./resources/contact');
+const job = require('./resources/job');
+const appointment = require('./resources/appointment');
+const visit = require('./resources/visit');
+const communication = require('./resources/communication');
+const user = require('./resources/user');
+const department = require('./resources/department');
+const jobStatus = require('./resources/job_status');
 
-const built = [customer, site, contact].map(buildAll);
+const built = [
+  customer,
+  site,
+  contact,
+  job,
+  appointment,
+  visit,
+  communication,
+  user,
+  department,
+  jobStatus,
+].map(buildAll);
 
 const merge = (section) => Object.assign({}, ...built.map((part) => part[section]));
 
